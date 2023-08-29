@@ -1,6 +1,7 @@
+[![](https://jitpack.io/v/Frosch2010/ScrapingChecker.svg)](https://jitpack.io/#Frosch2010/ScrapingChecker) [![](https://jitpack.io/v/Frosch2010/ScrapingChecker/month.svg)](https://jitpack.io/#Frosch2010/ScrapingChecker)
 # ScrapingChecker
 
-**ScrapingChecker** - An Android library for simplifying web scraping permission validation using robots.txt parsing.
+An Android library for simplifying web scraping permission validation using robots.txt parsing.
 
 ## Overview
 
