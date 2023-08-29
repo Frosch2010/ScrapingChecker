@@ -3,6 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://jitpack.io") }
     }
 }
 dependencyResolutionManagement {
@@ -16,3 +17,6 @@ dependencyResolutionManagement {
 rootProject.name = "ScrapingChecker"
 include(":sample")
 include(":scrapingchecker")
+
+val scrapingCheckerVersion = "1.0.0"
+
