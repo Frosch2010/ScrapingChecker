@@ -17,7 +17,7 @@ ScrapingChecker is designed to streamline the process of validating web scraping
 Add ScrapingChecker to your Android project using Gradle:
 
 ```gradle
-implementation 'com.github.frosch2010:ScrapingChecker:1.0.0
+implementation 'com.github.frosch2010:ScrapingChecker:1.0.1
 ```
 
 ## Usage
@@ -35,6 +35,12 @@ lifecycleScope.launch(Dispatchers.IO) { // Use Dispatchers.IO to run in the IO c
     }
 }
 ```
+
+## Changelog
+
+**1.0.1**
+
+- Initial release
 
 ## License
 
