@@ -1,4 +1,4 @@
-package com.frosch2010.scrapingchecker
+package com.frosch2010.scrapingchecker.sample
 
 import org.junit.Test
 

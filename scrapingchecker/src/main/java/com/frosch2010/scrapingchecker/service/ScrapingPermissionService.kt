@@ -1,3 +1,4 @@
+import android.util.Log
 import com.frosch2010.scrapingchecker.exceptions.InvalidUrlFormatException
 import com.frosch2010.scrapingchecker.models.ScrapingPermissionResult
 import com.frosch2010.scrapingchecker.utils.UrlUtils
@@ -12,7 +13,7 @@ import java.net.URL
 /**
  * Service for checking scraping permission based on robots.txt content.
  */
-class ScrapingPermissionService(private val userAgentMap: Map<String, String>) {
+class ScrapingPermissionService(private val userAgents: List<String>) {
 
     private val urlUtils = UrlUtils()
 
@@ -26,7 +27,6 @@ class ScrapingPermissionService(private val userAgentMap: Map<String, String>) {
         try {
             val baseUrl = urlUtils.getBaseUrl(url) ?: throw InvalidUrlFormatException("Invalid URL format")
             val pathUrl = urlUtils.getPathUrl(url) ?: throw InvalidUrlFormatException("Invalid URL format")
-            val userAgent = getUserAgentForUrl(url) ?: throw IllegalArgumentException("Invalid user agent")
 
             val robotsTxtContent = fetchRobotsTxtContent(baseUrl)
             if (robotsTxtContent.isBlank()) {
@@ -35,12 +35,9 @@ class ScrapingPermissionService(private val userAgentMap: Map<String, String>) {
 
             val directives = parseRobotsTxt(robotsTxtContent)
 
-            val userAgentsToCheck = mutableListOf("*", userAgent)
-
-            userAgentMap.entries.forEach { (searchEngine, userAgentString) ->
-                if (userAgent.startsWith(userAgentString, ignoreCase = true)) {
-                    userAgentsToCheck.add(userAgentString)
-                }
+            val userAgentsToCheck = mutableListOf("*")
+            if(userAgents.isNotEmpty()) {
+                userAgentsToCheck.addAll(userAgents)
             }
 
             val isAllowed = checkUserAgentDirectives(directives, userAgentsToCheck, pathUrl)
@@ -84,6 +81,7 @@ class ScrapingPermissionService(private val userAgentMap: Map<String, String>) {
 
             content.toString()
         } catch (e: Exception) {
+            Log.e("ScrapingPermissionService", "Failed to fetch robots.txt content", e)
             throw IOException("Failed to fetch robots.txt content")
         }
     }
@@ -134,12 +132,5 @@ class ScrapingPermissionService(private val userAgentMap: Map<String, String>) {
             }
         }
         return true // Scraping is allowed
-    }
-
-    private fun getUserAgentForUrl(url: String): String? {
-        val userAgentEntry = userAgentMap.entries.find { (searchEngine, userAgentString) ->
-            userAgentString.startsWith(searchEngine, ignoreCase = true)
-        }
-        return userAgentEntry?.value
     }
 }

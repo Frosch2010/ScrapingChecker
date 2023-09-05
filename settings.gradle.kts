@@ -15,8 +15,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ScrapingChecker"
-include(":sample")
 include(":scrapingchecker")
 
 val scrapingCheckerVersion = "1.0.0"
 
+include(":sample")

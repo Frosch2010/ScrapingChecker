@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ScrapingChecker</string>
     <string name="url_input_field">URL input field</string>
     <string name="check">Check</string>
     <string name="scraping_is_allowed">Scraping is allowed!</string>
