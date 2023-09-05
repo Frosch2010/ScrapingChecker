@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.frosch2010.scrapingchecker.interfaces.IScrapingPermissionService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             if (url.isNotEmpty()) {
 
                 CoroutineScope(Dispatchers.IO).launch {
-                    val service = ScrapingPermissionService(emptyList())
+                    val service: IScrapingPermissionService = ScrapingPermissionService(emptyList())
                     val result = service.isScrapingAllowed(url)
 
                     val message = if (result.isAllowed) {
