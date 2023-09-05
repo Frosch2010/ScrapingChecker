@@ -31,9 +31,11 @@ class ScrapingPermissionService(private val userAgents: List<String>): IScraping
 
             val directives = parseRobotsTxt(robotsTxtContent)
 
-            val userAgentsToCheck = mutableListOf("*")
+            val userAgentsToCheck = emptyList<String>().toMutableList()
             if(userAgents.isNotEmpty()) {
                 userAgentsToCheck.addAll(userAgents)
+            }else{
+                userAgentsToCheck.add("*")
             }
 
             val isAllowed = checkUserAgentDirectives(directives, userAgentsToCheck, pathUrl)
