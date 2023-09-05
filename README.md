@@ -18,26 +18,47 @@ ScrapingChecker is designed to streamline the process of validating web scraping
 Add ScrapingChecker to your Android project using Gradle:
 
 ```gradle
-implementation 'com.github.frosch2010:ScrapingChecker:1.0.1'
+implementation 'com.github.frosch2010:ScrapingChecker:1.0.2'
 ```
 
 ## Usage
 
 ### Checking Scraping Permission
+
+You can use the `ScrapingPermissionService` to determine whether scraping is allowed for a given URL. Here's an example of how to use it:
+
 ```kotlin
-lifecycleScope.launch(Dispatchers.IO) { // Use Dispatchers.IO to run in the IO context
-    val scrapingPermissionService = ScrapingPermissionService()
-    val result = scrapingPermissionService.isScrapingAllowed("https://example.com", "MyUserAgent")
+// Use lifecycleScope.launch with Dispatchers.IO to run in the IO context
+lifecycleScope.launch(Dispatchers.IO) {
+    // Create a ScrapingPermissionService instance with the desired user agents
+    val scrapingPermissionService = ScrapingPermissionService(emptyList()) // checks for '*'
+
+    // or if you want to check for specific user agents:
+    // val scrapingPermissionService = ScrapingPermissionService(listOf("Googlebot"))
+    
+    // Specify the URL you want to check for scraping permission
+    val urlToCheck = "https://example.com"
+    
+    // Call the isScrapingAllowed function to check permission
+    val result = scrapingPermissionService.isScrapingAllowed(urlToCheck)
 
     if (result.isAllowed) {
-        // Scraping is allowed
+        // Scraping is allowed for the given URL by the specified user agent(s)
+        // You can perform scraping operations here
     } else {
-        // Scraping is not allowed, check result.errorMessage for details
+        // Scraping is not allowed for the given URL by the specified user agent(s)
+        // Check result.errorMessage for more details on the restriction
     }
 }
 ```
 
 ## Changelog
+
+**1.0.2**
+
+- added sample
+- added unit tests for urlUtils
+- fixed issues
 
 **1.0.1**
 
