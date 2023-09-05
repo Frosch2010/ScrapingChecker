@@ -94,17 +94,28 @@ class ScrapingPermissionService(private val userAgents: List<String>): IScraping
         val directives = mutableMapOf<String, MutableList<String>>()
         val lines = robotsTxtContent.lines()
 
-        var currentUserAgent: String? = null
+        var rulesStarted = false
+        var currentUserAgents: MutableList<String> = mutableListOf()
 
         for (line in lines) {
             if (line.startsWith("User-agent:", ignoreCase = true)) {
-                currentUserAgent = line.substringAfter("User-agent:", "").trim()
-                directives[currentUserAgent] = mutableListOf()
+
+                if(rulesStarted){
+                    currentUserAgents = mutableListOf()
+                }
+
+                currentUserAgents.add(line.substringAfter("User-agent:", "").trim())
+                directives[line.substringAfter("User-agent:", "").trim()] = mutableListOf()
+
             } else if (line.startsWith("Disallow:", ignoreCase = true)) {
+
                 val disallowedPath = line.substringAfter("Disallow:", "").trim()
-                if (currentUserAgent != null) {
+
+                currentUserAgents.forEach { currentUserAgent ->
                     directives[currentUserAgent]?.add(disallowedPath)
                 }
+
+                rulesStarted = true
             }
         }
 
@@ -123,7 +134,9 @@ class ScrapingPermissionService(private val userAgents: List<String>): IScraping
             if (directives.containsKey(userAgent)) {
                 val disallowedPaths = directives[userAgent] ?: emptyList()
                 for (path in disallowedPaths) {
-                    if (path.isNotEmpty() && path == "/" || urlPath.startsWith(path)) {
+                    if(path.isEmpty()){
+                        return true // Scraping is allowed
+                    } else if (path == "/" || urlPath.startsWith(path)) {
                         return false // Scraping not allowed
                     }
                 }
