@@ -1,6 +1,7 @@
 import android.util.Log
 import com.frosch2010.scrapingchecker.exceptions.InvalidUrlFormatException
 import com.frosch2010.scrapingchecker.interfaces.IScrapingPermissionService
+import com.frosch2010.scrapingchecker.interfaces.IUrlUtils
 import com.frosch2010.scrapingchecker.models.ScrapingPermissionResult
 import com.frosch2010.scrapingchecker.utils.UrlUtils
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,7 @@ import java.net.URL
  */
 class ScrapingPermissionService(private val userAgents: List<String>): IScrapingPermissionService {
 
-    private val urlUtils = UrlUtils()
+    private val urlUtils: IUrlUtils = UrlUtils()
 
     override suspend fun isScrapingAllowed(url: String): ScrapingPermissionResult {
         try {
