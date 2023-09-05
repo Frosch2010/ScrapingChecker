@@ -1,5 +1,6 @@
 import android.util.Log
 import com.frosch2010.scrapingchecker.exceptions.InvalidUrlFormatException
+import com.frosch2010.scrapingchecker.interfaces.IScrapingPermissionService
 import com.frosch2010.scrapingchecker.models.ScrapingPermissionResult
 import com.frosch2010.scrapingchecker.utils.UrlUtils
 import kotlinx.coroutines.Dispatchers
@@ -13,17 +14,11 @@ import java.net.URL
 /**
  * Service for checking scraping permission based on robots.txt content.
  */
-class ScrapingPermissionService(private val userAgents: List<String>) {
+class ScrapingPermissionService(private val userAgents: List<String>): IScrapingPermissionService {
 
     private val urlUtils = UrlUtils()
 
-    /**
-     * Checks if scraping is allowed for the given URL.
-     *
-     * @param url The URL to check scraping permission for.
-     * @return A [ScrapingPermissionResult] indicating whether scraping is allowed and any error message.
-     */
-    suspend fun isScrapingAllowed(url: String): ScrapingPermissionResult {
+    override suspend fun isScrapingAllowed(url: String): ScrapingPermissionResult {
         try {
             val baseUrl = urlUtils.getBaseUrl(url) ?: throw InvalidUrlFormatException("Invalid URL format")
             val pathUrl = urlUtils.getPathUrl(url) ?: throw InvalidUrlFormatException("Invalid URL format")
