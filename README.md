@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/Frosch2010/ScrapingChecker.svg)](https://jitpack.io/#Frosch2010/ScrapingChecker) [![](https://jitpack.io/v/Frosch2010/ScrapingChecker/month.svg)](https://jitpack.io/#Frosch2010/ScrapingChecker)
+[![](https://jitpack.io/v/jens-muenker/ScrapingChecker.svg)](https://jitpack.io/#jens-muenker/ScrapingChecker) [![](https://jitpack.io/v/jens-muenker/ScrapingChecker/month.svg)](https://jitpack.io/#jens-muenker/ScrapingChecker)
 # ScrapingChecker
 
 An Android library for simplifying web scraping permission validation using robots.txt parsing.
@@ -18,7 +18,7 @@ ScrapingChecker is designed to streamline the process of validating web scraping
 Add ScrapingChecker to your Android project using Gradle:
 
 ```gradle
-implementation 'com.github.frosch2010:ScrapingChecker:1.0.3'
+implementation 'com.github.jens-muenker:ScrapingChecker:1.0.3'
 ```
 
 ## Usage
